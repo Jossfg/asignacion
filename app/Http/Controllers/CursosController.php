@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Curso;
 
 class CursosController extends Controller
 {
@@ -13,7 +14,8 @@ class CursosController extends Controller
      */
     public function index()
     {
-        //
+        $cursos = Curso::all();
+        return view('cursos.index', compact('cursos'));
     }
 
     /**
@@ -23,7 +25,7 @@ class CursosController extends Controller
      */
     public function create()
     {
-        //
+        return view('cursos.create');
     }
 
     /**
@@ -34,7 +36,10 @@ class CursosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->except('_token');
+        $curso = new Curso($data);
+        $curso->save();
+        return redirect()->route('cursos.index');
     }
 
     /**
